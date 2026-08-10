@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Compress Maven Plugins
+    Copyright (C) 2026, Evolved Binary Ltd
+
+    admin@evolvedbinary.com
+    https://www.evolvedbinary.com
+
+    SPDX-License-Identifier: BUSL-1.1
+
+    Use of this software is governed by the Business Source License 1.1
+    included in the LICENSE file and at www.mariadb.com/bsl11.
+
+    Change Date: 2029-08-10
+
+    On the date above, in accordance with the Business Source License, use
+    of this software will be governed by the Apache License, Version 2.0.
+
+    Additional Use Grant: Production use of the Licensed Work for a permitted
+    purpose. A Permitted Purpose is any purpose other than a Competing Use.
+    A Competing Use means making the Software available to others in a commercial
+    product or service that: substitutes for the Software; substitutes for any
+    other product or service we offer using the Software that exists as of the
+    date we make the Software available; or offers the same or substantially
+    similar functionality as the Software.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.evolvedbinary.maven.plugins</groupId>
+        <artifactId>compress-maven-plugins-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>compress-maven-plugins-parent</relativePath>
+    </parent>
+
+    <artifactId>compress-maven-plugins</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Compress Maven Plugins</name>
+    <description>Maven plugins to compress and uncompress various archive formats</description>
+
+    <scm>
+        <connection>scm:git:https://github.com/evolvedbinary/compress-maven-plugins.git</connection>
+        <developerConnection>scm:git:https://github.com/evolvedbinary/compress-maven-plugins.git</developerConnection>
+        <url>scm:git:https://github.com/evolvedbinary/compress-maven-plugins.git</url>
+    </scm>
+
+    <modules>
+        <module>compress-maven-plugins-parent</module>
+        <module>compress-uncompress-maven-plugins-common</module>
+        <module>compress-uncompress-maven-plugin</module>
+        <module>compress-maven-plugin</module>
+        <module>uncompress-maven-plugin</module>
+    </modules>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseSets>
+                        <licenseSet>
+                            <header>${project.parent.relativePath}/BSL-11-license.template.txt</header>
+                            <includes>
+                                <include>pom.xml</include>
+                            </includes>
+                        </licenseSet>
+                    </licenseSets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>compress-maven-plugins-@{project.version}</tagNameFormat>
+                    <releaseProfiles>compress-maven-plugins-release</releaseProfiles>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- NOTE: this is used from the maven-release-plugin -->
+            <id>compress-maven-plugins-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <deploymentName>${project.artifactId}-${project.version}</deploymentName>
+                            <failOnBuildFailure>true</failOnBuildFailure>
+                            <waitUntil>validated</waitUntil>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

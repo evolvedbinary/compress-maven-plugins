@@ -1,0 +1,66 @@
+<!--
+
+    Compress Maven Plugins
+    Copyright (C) 2026, Evolved Binary Ltd
+
+    admin@evolvedbinary.com
+    https://www.evolvedbinary.com
+
+    SPDX-License-Identifier: BUSL-1.1
+
+    Use of this software is governed by the Business Source License 1.1
+    included in the LICENSE file and at www.mariadb.com/bsl11.
+
+    Change Date: 2029-08-10
+
+    On the date above, in accordance with the Business Source License, use
+    of this software will be governed by the Apache License, Version 2.0.
+
+    Additional Use Grant: Production use of the Licensed Work for a permitted
+    purpose. A Permitted Purpose is any purpose other than a Competing Use.
+    A Competing Use means making the Software available to others in a commercial
+    product or service that: substitutes for the Software; substitutes for any
+    other product or service we offer using the Software that exists as of the
+    date we make the Software available; or offers the same or substantially
+    similar functionality as the Software.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.evolvedbinary.maven.plugins.it.compress-uncompress-maven-plugin</groupId>
+    <artifactId>compress-dir-zip</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Test Compressing a directory with Zip</name>
+    <description>Integration Test for Compressing a directory with Zip</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.evolvedbinary.maven.plugins</groupId>
+                <artifactId>compress-uncompress-maven-plugin</artifactId>
+                <version>@project.version@</version>
+                <executions>
+                    <execution>
+                        <id>compress-dir-zip</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>compress</goal>
+                        </goals>
+                        <configuration>
+                            <inputPath>${project.basedir}/src/main/resources/folder1</inputPath>
+                            <outputPath>${project.build.directory}/folder1.zip</outputPath>
+                            <algorithm>zip</algorithm>
+                            <compressionLevel>4</compressionLevel>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

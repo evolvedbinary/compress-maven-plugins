@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Compress Maven Plugins
+    Copyright (C) 2026, Evolved Binary Ltd
+
+    admin@evolvedbinary.com
+    https://www.evolvedbinary.com
+
+    SPDX-License-Identifier: BUSL-1.1
+
+    Use of this software is governed by the Business Source License 1.1
+    included in the LICENSE file and at www.mariadb.com/bsl11.
+
+    Change Date: 2029-08-10
+
+    On the date above, in accordance with the Business Source License, use
+    of this software will be governed by the Apache License, Version 2.0.
+
+    Additional Use Grant: Production use of the Licensed Work for a permitted
+    purpose. A Permitted Purpose is any purpose other than a Competing Use.
+    A Competing Use means making the Software available to others in a commercial
+    product or service that: substitutes for the Software; substitutes for any
+    other product or service we offer using the Software that exists as of the
+    date we make the Software available; or offers the same or substantially
+    similar functionality as the Software.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.evolvedbinary.maven.plugins</groupId>
+    <artifactId>compress-maven-plugins-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Compress Maven Plugins Parent</name>
+    <description>Parent pom.xml for Maven plugins to compress and uncompress various archive formats</description>
+    <url>https://github.com/evolvedbinary/compress-maven-plugins</url>
+    <inceptionYear>2026</inceptionYear>
+
+    <organization>
+        <name>Evolved Binary</name>
+        <url>https://www.evolvedbinary.com</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Business Source Licence 1.1</name>
+            <url>https://mariadb.com/bsl11/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Adam Retter</name>
+            <organization>Evolved Binary</organization>
+            <url>https://www.evolvedbinary.com</url>
+            <email>adam@evolvedbinary.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/evolvedbinary/compress-maven-plugins.git</connection>
+        <developerConnection>scm:git:https://github.com/evolvedbinary/compress-maven-plugins.git</developerConnection>
+        <url>scm:git:https://github.com/evolvedbinary/compress-maven-plugins.git</url>
+    </scm>
+
+    <properties>
+        <project.build.source>1.8</project.build.source>
+        <project.build.target>1.8</project.build.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.version>3.5.2</maven.version>
+
+        <junit.version>5.14.4</junit.version>
+
+        <!-- BSL change date -->
+        <bsl.change-date>2029-08-10</bsl.change-date>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>${maven.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${maven.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jspecify</groupId>
+                <artifactId>jspecify</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>4.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.6.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.evolvedbinary.maven.plugins</groupId>
+                    <artifactId>buildversion-maven-plugin</artifactId>
+                    <version>2.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.15.0</version>
+                    <configuration>
+                        <source>${project.build.source}</source>
+                        <target>${project.build.target}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${maven.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-invoker-plugin</artifactId>
+                    <version>3.10.1</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-api</artifactId>
+                            <version>${junit.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.5.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <manifestEntries>
+                                <Build-Tag>${build-tag}</Build-Tag>
+                                <Git-Commit>${build-commit}</Git-Commit>
+                                <Git-Commit-Abbrev>${build-commit-abbrev}</Git-Commit-Abbrev>
+                                <Build-Version>${build-version}</Build-Version>
+                                <Build-Timestamp>${build-tstamp}</Build-Timestamp>
+                                <Source-Repository>${project.scm.connection}</Source-Repository>
+                                <Description>${project.description}</Description>
+                                <Implementation-URL>${project.url}</Implementation-URL>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.4.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <manifestEntries>
+                                <Build-Tag>${build-tag}</Build-Tag>
+                                <Git-Commit>${build-commit}</Git-Commit>
+                                <Git-Commit-Abbrev>${build-commit-abbrev}</Git-Commit-Abbrev>
+                                <Build-Version>${build-version}</Build-Version>
+                                <Build-Timestamp>${build-tstamp}</Build-Timestamp>
+                                <Source-Repository>${project.scm.connection}</Source-Repository>
+                                <Description>${project.description}</Description>
+                                <Implementation-URL>${project.url}</Implementation-URL>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.12.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <manifestEntries>
+                                <Build-Tag>${build-tag}</Build-Tag>
+                                <Git-Commit>${build-commit}</Git-Commit>
+                                <Git-Commit-Abbrev>${build-commit-abbrev}</Git-Commit-Abbrev>
+                                <Build-Version>${build-version}</Build-Version>
+                                <Build-Timestamp>${build-tstamp}</Build-Timestamp>
+                                <Source-Repository>${project.scm.connection}</Source-Repository>
+                                <Description>${project.description}</Description>
+                                <Implementation-URL>${project.url}</Implementation-URL>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.2.8</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.11.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-maven-version</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>${project.build.target}</version>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>3.9.0</version>
+                                </requireMavenVersion>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <properties>
+                        <change-date>${bsl.change-date}</change-date>
+                    </properties>
+                    <failIfMissing>true</failIfMissing>
+                    <strictCheck>true</strictCheck>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <licenseSets>
+                        <licenseSet>
+                            <!--
+                                License (BSL 1.1)
+                            -->
+                            <header>BSL-11-license.template.txt</header>
+                            <excludes>
+                                <exclude>BSL-11-license.template.txt</exclude>
+                            </excludes>
+                        </licenseSet>
+                    </licenseSets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>check-headers</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.evolvedbinary.maven.plugins</groupId>
+                <artifactId>buildversion-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>set-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>analyze</id>
+                        <goals>
+                            <goal>analyze-only</goal>
+                        </goals>
+                        <configuration>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
