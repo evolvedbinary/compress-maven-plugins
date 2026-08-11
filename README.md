@@ -67,9 +67,10 @@ For example if you wanted to zip the folder `src/main/resources/folder1` into th
 ```
 
 ## Supported Algorithms
-    * Zip
 
-If you want to add your own algoirith, you just need to implement `com.evolvedbinary.maven.plugins.compressuncompress.common.compression.api.CompressionProvider` and/or `com.evolvedbinary.maven.plugins.compressuncompress.common.uncompression.api.UncompressionProvider`, and make them discoverable to the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Java Service Loader</a>. You then make your classes available to the plugin by adding them as a dependency, for example:
+* Zip
+
+If you want to add your own algorithm, you just need to implement `com.evolvedbinary.maven.plugins.compressuncompress.common.compression.api.CompressionProvider` and/or `com.evolvedbinary.maven.plugins.compressuncompress.common.uncompression.api.UncompressionProvider`, and make them discoverable to the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Java Service Loader</a>. You then make your classes available to the plugin by adding them as a dependency, for example:
 
 ```xml
 <plugin>
