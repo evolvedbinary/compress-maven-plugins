@@ -28,9 +28,7 @@ package com.evolvedbinary.maven.plugins.compressuncompress;
 import com.evolvedbinary.maven.plugins.compressuncompress.common.AbstractCompressMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 @Mojo(name = "compress", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true, requiresProject = false)
 public class CompressMojo extends AbstractCompressMojo {
 
