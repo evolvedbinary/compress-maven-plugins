@@ -109,7 +109,7 @@ public class AbstractCompressMojo extends AbstractMojo {
             } catch (final IOException e) {
                 final String errorMessage = "Unable to create directory for outputPath: " + outputPath + ": " + e.getMessage();
                 getLog().error(errorMessage);
-                throw new MojoExecutionException(errorMessage);
+                throw new MojoExecutionException(errorMessage, e);
             }
             String outputFileName = output.getFileName().toString();
             // does the outputFileName have a file extension, if not add one
@@ -127,7 +127,7 @@ public class AbstractCompressMojo extends AbstractMojo {
         } catch (final IOException e) {
             final String errorMessage = "Unable to compress inputPath: " + inputPath + ": " + e.getMessage();
             getLog().error(errorMessage);
-            throw new MojoExecutionException(errorMessage);
+            throw new MojoExecutionException(errorMessage, e);
         }
     }
 

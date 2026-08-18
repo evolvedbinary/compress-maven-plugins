@@ -100,7 +100,7 @@ public class AbstractUncompressMojo extends AbstractMojo {
                 } catch (final IOException e) {
                     final String errorMessage = "Unable to create directory for outputPath: " + outputPath + ": " + e.getMessage();
                     getLog().error(errorMessage);
-                    throw new MojoExecutionException(errorMessage);
+                    throw new MojoExecutionException(errorMessage, e);
                 }
             }
 
@@ -129,7 +129,7 @@ public class AbstractUncompressMojo extends AbstractMojo {
                 } catch (final IOException e) {
                     final String errorMessage = "Unable to create directory for outputPath: " + outputPath + ": " + e.getMessage();
                     getLog().error(errorMessage);
-                    throw new MojoExecutionException(errorMessage);
+                    throw new MojoExecutionException(errorMessage, e);
                 }
             }
         }
@@ -142,7 +142,7 @@ public class AbstractUncompressMojo extends AbstractMojo {
         } catch (final IOException e) {
             final String errorMessage = "Unable to uncompress inputFile " + inputFile + ": " + e.getMessage();
             getLog().error(errorMessage);
-            throw new MojoExecutionException(errorMessage);
+            throw new MojoExecutionException(errorMessage, e);
         }
     }
 
