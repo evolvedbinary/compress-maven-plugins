@@ -83,13 +83,25 @@ public class ZipUncompressionProvider implements UncompressionProvider {
             final Enumeration<ZipArchiveEntry> zipFileEntries = zipFile.getEntriesInPhysicalOrder();
             while (zipFileEntries.hasMoreElements()) {
                 final ZipArchiveEntry zipArchiveEntry = zipFileEntries.nextElement();
-                uncompressFile(zipFile, zipArchiveEntry, outputDirectory, progressListener);
+                if (zipArchiveEntry.isDirectory()) {
+                    uncompressDirectory(zipArchiveEntry, outputDirectory);
+                } else {
+                    uncompressFile(zipFile, zipArchiveEntry, outputDirectory, progressListener);
+                }
             }
         }
 
         if (progressListener != null) {
             final Instant endTime = Instant.now();
             progressListener.finished(inputFile, outputDirectory, Duration.between(startTime, endTime));
+        }
+    }
+
+    private static void uncompressDirectory(final ZipArchiveEntry zipArchiveEntry, final Path outputDirectory) throws IOException {
+        final Path newOutputDirectory = outputDirectory.resolve(zipArchiveEntry.getName());
+        if (!Files.exists(newOutputDirectory)) {
+            // create dir
+            Files.createDirectories(newOutputDirectory);
         }
     }
 
@@ -102,11 +114,6 @@ public class ZipUncompressionProvider implements UncompressionProvider {
         }
 
         final Path outputFile = outputDirectory.resolve(zipArchiveEntry.getName());
-        final Path outputFileParentDirectory = outputFile.getParent();
-        if (!Files.exists(outputFileParentDirectory)) {
-            // create parent dir
-            Files.createDirectories(outputFileParentDirectory);
-        }
 
         final FileAttribute[] fileAttributes;
         if (!IS_WINDOWS) {

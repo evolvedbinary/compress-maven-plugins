@@ -117,17 +117,18 @@ def unzip(final Path zipOutputFile, final Path outputDirectory) {
         while (zipFileEntries.hasMoreElements()) {
             final ZipArchiveEntry zipArchiveEntry = zipFileEntries.nextElement()
 
-            final Path outputFile = outputDirectory.resolve(zipArchiveEntry.getName())
-            final Path outputFileParentDirectory = outputFile.getParent()
-            if (!Files.exists(outputFileParentDirectory)) {
-                // create parent dir
-                Files.createDirectories(outputFileParentDirectory)
-            }
+            final Path outputPath = outputDirectory.resolve(zipArchiveEntry.getName())
 
-            Files.createFile(outputFile)
+            if (zipArchiveEntry.isDirectory()) {
+                if (!Files.exists(outputPath)) {
+                    Files.createDirectories(outputPath)
+                }
 
-            zipFile.getInputStream(zipArchiveEntry).with { zipArchiveEntryInputStream ->
-                Files.copy(zipArchiveEntryInputStream, outputFile, StandardCopyOption.REPLACE_EXISTING)
+            } else {
+                Files.createFile(outputPath)
+                zipFile.getInputStream(zipArchiveEntry).with { zipArchiveEntryInputStream ->
+                    Files.copy(zipArchiveEntryInputStream, outputPath, StandardCopyOption.REPLACE_EXISTING)
+                }
             }
         }
     }
