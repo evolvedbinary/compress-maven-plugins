@@ -158,9 +158,9 @@ public class AbstractCompressMojo extends AbstractMojo {
                         getLog().error(errorMessage);
                         throw new MojoFailureException(errorMessage);
                     }
-
-                    return compressionProvider;
                 }
+
+                return compressionProvider;
             }
         }
 
